@@ -1,0 +1,108 @@
+---
+title: "Assignment 3 - Task 4"
+author: "Hannah Brady"
+date: "11/2/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(here)
+library(tidyverse)
+library(janitor)
+library(lubridate)
+library(kableExtra)
+```
+
+## Comparing mean size of purple urchins at Naples Reef in January 2010 by treatment
+
+### Data wrangling
+
+This code chunk reads in the urchins.csv data and creates a subset of the data that filters data to show all observations for purple urchins observed at Naples Reef in January 2010. This is done using the here() function, janitor() function, and lubridate() function.
+
+```{r, echo = TRUE, message = FALSE, warning = FALSE}
+urchins <- read_csv(here("data","urchins.csv")) %>% 
+  clean_names()
+
+urchins_subset <- urchins %>% 
+  mutate(date = mdy(date)) %>% 
+  mutate(year = year(date)) %>% 
+  mutate(month = month(date)) %>% 
+  filter(common_name == "Purple Urchin", site == "NAPL", year == 2010, month == 1)
+```
+
+### Exploratory graphs
+
+This code chunk outputs an exploratory histogram based on two different treatments or urchins: annual or control. Annual treatment means there was annual kelp removal at the reef and control treatment means that there was not giant kelp removal at the reef.
+
+```{r, echo = TRUE, message = FALSE, warning = FALSE}
+ggplot(data = urchins_subset, aes(x = size))+
+  geom_histogram(bins = 12, aes(fill = treatment))+
+  facet_wrap(~treatment)+
+  labs(x = "Urchin diameter (cm)", y = "Count")+
+  scale_fill_discrete(name = "Treatment", labels = c("Annual kelp removal", "No giant kelp removal"))
+```
+
+This code chunk outputs an exploratory quantile-quantile plot to compare distribution of sizes for the two different treatments of purple urchins.
+
+```{r, echo = TRUE, message = FALSE, warning = FALSE}
+ggplot(data = urchins_subset, aes(sample = size))+
+  geom_qq()+
+  facet_wrap(~treatment)
+```
+
+### Main takeaways of exploratory graphs
+
+Both histograms comparing urchin diameter based on treatment appear to have bimodal distributions, meaning each appears to have two peaks of the most frequent size, suggesting that the data is not normally distributed. However, the qq-plots are both fairly linear, suggesting that the data for both treatments is normally distributed.
+
+### Table of summary statistics
+
+This code chunk creates a summary table of statistics for the two different treatment groups from the urchins data including mean, standard deviation, and sample size.
+
+```{r, echo = TRUE, message = FALSE, warning = FALSE}
+subset_stats <- urchins_subset %>% 
+  group_by(treatment) %>% 
+  summarize(mean_size = mean(size),
+            median_size = median(size),
+            sd_size = sd(size),
+            n = n()) %>%  
+  rename(sample_size = n)
+
+kable(subset_stats, digits = 3,
+      col.names = c("Treatment", "Mean (cm)", "Median (cm)", "Standard Deviation (cm)", "Sample Size"),
+      caption = "Urchin Diameter Summary Statistics") %>% 
+  kable_material()
+```
+
+### Two-sample t-test
+
+This code chunk performs a two-sample t-test to compare size distributions of the two different treatments of the purple urchins.
+
+```{r, echo = TRUE, message = FALSE, warning = FALSE}
+annual_sample <- urchins_subset %>% 
+  filter(treatment == "ANNUAL") %>% 
+  pull(size)
+
+control_sample <- urchins_subset %>% 
+  filter(treatment == "CONTROL") %>% 
+  pull(size)
+
+t.test(x = annual_sample, control_sample)
+```
+
+### Interpreting two-sample t-test results
+
+The mean diameter of the urchin sample with annual treatment was 3.917 cm with a standard deviation of 0.966 cm while the mean diameter of the urchin sample with control treatment was 3.726 cm with a standard deviation of 0.867 cm. The actual difference in the means is calculated using the following code chunk:
+
+```{r, echo = TRUE, message = FALSE, warning = FALSE}
+mean_diff <- 3.917 - 3.726
+mean_diff
+```
+
+The actual difference in the means is 0.191 cm. The p-value is 0.25.
+
+### Meaning of the p-value
+
+If these two samples were drawn from a population with the same mean, there is at least a 25% chance of getting means that are at least this different. The lower the p-value, the less likely the samples came from populations with the same mean.
+
+
