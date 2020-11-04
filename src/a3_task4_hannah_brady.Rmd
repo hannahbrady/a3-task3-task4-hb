@@ -92,14 +92,18 @@ t.test(x = annual_sample, control_sample)
 
 ### Interpreting two-sample t-test results
 
-The mean diameter of the urchin sample with annual treatment was 3.917 cm with a standard deviation of 0.966 cm while the mean diameter of the urchin sample with control treatment was 3.726 cm with a standard deviation of 0.867 cm. The actual difference in the means is calculated using the following code chunk:
+The mean diameter of the urchin sample with annual treatment was 3.917 cm with a standard deviation of 0.966 cm while the mean diameter of the urchin sample with control treatment was 3.726 cm with a standard deviation of 0.867 cm. The actual difference in the means and percent difference in the means is calculated using the following code chunk:
 
 ```{r, echo = TRUE, message = FALSE, warning = FALSE}
-mean_diff <- 3.917 - 3.726
+annual_mean <- mean(annual_sample)
+control_mean <- mean(control_sample)
+mean_diff <- annual_mean - control_mean
 mean_diff
+pct_diff <- mean_diff/control_mean
+pct_diff
 ```
 
-The actual difference in the means is 0.191 cm. The p-value is 0.25.
+The actual difference in the means is 0.191 cm with the mean urchin diameter of those that experienced annual treatment 5% larger than the mean urchin diameter with the control treatment. The p-value is 0.25.
 
 ### Meaning of the p-value
 

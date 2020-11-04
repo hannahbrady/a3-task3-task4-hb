@@ -708,11 +708,16 @@ t.test(x = annual_sample, control_sample)</code></pre>
 </div>
 <div id="interpreting-two-sample-t-test-results" class="section level3">
 <h3>Interpreting two-sample t-test results</h3>
-<p>The mean diameter of the urchin sample with annual treatment was 3.917 cm with a standard deviation of 0.966 cm while the mean diameter of the urchin sample with control treatment was 3.726 cm with a standard deviation of 0.867 cm. The actual difference in the means is calculated using the following code chunk:</p>
-<pre class="r"><code>mean_diff &lt;- 3.917 - 3.726
+<p>The mean diameter of the urchin sample with annual treatment was 3.917 cm with a standard deviation of 0.966 cm while the mean diameter of the urchin sample with control treatment was 3.726 cm with a standard deviation of 0.867 cm. The actual difference in the means and percent difference in the means is calculated using the following code chunk:</p>
+<pre class="r"><code>annual_mean &lt;- mean(annual_sample)
+control_mean &lt;- mean(control_sample)
+mean_diff &lt;- annual_mean - control_mean
 mean_diff</code></pre>
-<pre><code>## [1] 0.191</code></pre>
-<p>The actual difference in the means is 0.191 cm. The p-value is 0.25.</p>
+<pre><code>## [1] 0.1908602</code></pre>
+<pre class="r"><code>pct_diff &lt;- mean_diff/control_mean
+pct_diff</code></pre>
+<pre><code>## [1] 0.05122655</code></pre>
+<p>The actual difference in the means is 0.191 cm with the mean urchin diameter of those that experienced annual treatment 5% larger than the mean urchin diameter with the control treatment. The p-value is 0.25.</p>
 </div>
 <div id="meaning-of-the-p-value" class="section level3">
 <h3>Meaning of the p-value</h3>
