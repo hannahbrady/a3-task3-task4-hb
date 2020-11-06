@@ -71,16 +71,20 @@ kable(urchins_stats, digits = 3,
 
 ### 1.iii Takeaways from exploratory graphs and summary statistics
 
-Initial comparisons of the purple and red urchin diameters data shows that the central tendency for purple urchins is smaller than red urchins; the height of the boxes in the box plot show this as does the mean and median summary statistics. Further, the histogram and summary statistics show that the purple urchin data is not distributed as much as the Red Urchin data because the Purple Urchin data has higher frequencies around the central tendency in the histogram and has a lower standard deviation than the Red Urchin data.
+Initial comparisons of the purple and red urchin diameters data shows that the central tendency for purple urchins is smaller than red urchins; the differing inter-quartile ranges and identified median in the box plot show this as does the mean and median summary statistics. Further, the histogram and summary statistics show that the purple urchin data is not distributed as much as the Red Urchin data because the Purple Urchin data has higher frequencies around the central tendency in the histogram and has a lower standard deviation than the Red Urchin data.
 
 ## 2. Exploring purple urchin counts by site and year
 
 ### 2.i Data wrangling
 
 This code chunk creates and stores a subset of the data from urchins.csv called purple_urchins that:
+
 - Filters to only keep purple urchins data;
+
 - Converts the date to class "Date";
+
 - Creates a new column that contains only the year the observation was taken; and
+
 - Creates a new column that contains the full name of the site of each observation.
 
 ```{r, echo = TRUE, message = FALSE, warning = FALSE}
@@ -104,6 +108,7 @@ This code chunk creates a summary table of the purple_urchins data with counts o
 ```{r, echo = TRUE, message = FALSE, warning = FALSE}
 purple_stats <- purple_urchins %>% 
   count(site_full, year)
+purple_stats
 ```
 
 ### 2.iii Exploratory graph

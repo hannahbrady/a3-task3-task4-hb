@@ -684,14 +684,20 @@ Red Urchin
 </div>
 <div id="iii-takeaways-from-exploratory-graphs-and-summary-statistics" class="section level3">
 <h3>1.iii Takeaways from exploratory graphs and summary statistics</h3>
-<p>Initial comparisons of the purple and red urchin diameters data shows that the central tendency for purple urchins is smaller than red urchins; the height of the boxes in the box plot show this as does the mean and median summary statistics. Further, the histogram and summary statistics show that the purple urchin data is not distributed as much as the Red Urchin data because the Purple Urchin data has higher frequencies around the central tendency in the histogram and has a lower standard deviation than the Red Urchin data.</p>
+<p>Initial comparisons of the purple and red urchin diameters data shows that the central tendency for purple urchins is smaller than red urchins; the differing inter-quartile ranges and identified median in the box plot show this as does the mean and median summary statistics. Further, the histogram and summary statistics show that the purple urchin data is not distributed as much as the Red Urchin data because the Purple Urchin data has higher frequencies around the central tendency in the histogram and has a lower standard deviation than the Red Urchin data.</p>
 </div>
 </div>
 <div id="exploring-purple-urchin-counts-by-site-and-year" class="section level2">
 <h2>2. Exploring purple urchin counts by site and year</h2>
 <div id="i-data-wrangling" class="section level3">
 <h3>2.i Data wrangling</h3>
-<p>This code chunk creates and stores a subset of the data from urchins.csv called purple_urchins that: - Filters to only keep purple urchins data; - Converts the date to class “Date”; - Creates a new column that contains only the year the observation was taken; and - Creates a new column that contains the full name of the site of each observation.</p>
+<p>This code chunk creates and stores a subset of the data from urchins.csv called purple_urchins that:</p>
+<ul>
+<li><p>Filters to only keep purple urchins data;</p></li>
+<li><p>Converts the date to class “Date”;</p></li>
+<li><p>Creates a new column that contains only the year the observation was taken; and</p></li>
+<li><p>Creates a new column that contains the full name of the site of each observation.</p></li>
+</ul>
 <pre class="r"><code>purple_urchins &lt;- urchins %&gt;% 
   clean_names() %&gt;% 
   filter(common_name == &quot;Purple Urchin&quot;) %&gt;% 
@@ -708,7 +714,22 @@ Red Urchin
 <h3>2.ii Summary table</h3>
 <p>This code chunk creates a summary table of the purple_urchins data with counts of purple urchins grouped by site and year.</p>
 <pre class="r"><code>purple_stats &lt;- purple_urchins %&gt;% 
-  count(site_full, year)</code></pre>
+  count(site_full, year)
+purple_stats</code></pre>
+<pre><code>## # A tibble: 61 x 3
+##    site_full            year     n
+##    &lt;chr&gt;               &lt;dbl&gt; &lt;int&gt;
+##  1 Arroyo Quemado Reef  2008    67
+##  2 Arroyo Quemado Reef  2009   926
+##  3 Arroyo Quemado Reef  2010   921
+##  4 Arroyo Quemado Reef  2011   887
+##  5 Arroyo Quemado Reef  2012   764
+##  6 Arroyo Quemado Reef  2013   434
+##  7 Arroyo Quemado Reef  2014   410
+##  8 Arroyo Quemado Reef  2015   400
+##  9 Arroyo Quemado Reef  2016   342
+## 10 Arroyo Quemado Reef  2017   406
+## # ... with 51 more rows</code></pre>
 </div>
 <div id="iii-exploratory-graph" class="section level3">
 <h3>2.iii Exploratory graph</h3>
